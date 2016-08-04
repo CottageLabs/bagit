@@ -83,7 +83,7 @@ module BagIt
         begin
           FileUtils.mv(file, path)
           write_bag_info
-        rescue
+        rescue => e
           raise "File already exists. For more detail, exception #{e.inspect}"
         end
 
