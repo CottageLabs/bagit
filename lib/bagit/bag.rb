@@ -1,9 +1,9 @@
-require_relative 'fetch.rb'
-require_relative 'file.rb'
-require_relative 'info.rb'
-require_relative 'manifest.rb'
-require_relative 'string.rb'
-require_relative 'valid.rb'
+require 'fetch.rb'
+require 'file.rb'
+require 'info.rb'
+require 'manifest.rb'
+require 'string.rb'
+require 'valid.rb'
 
 module BagIt
 
