@@ -3,8 +3,8 @@
 # Functionality conforms to the BagIt Spec v0.96:
 # http://www.cdlib.org/inside/diglib/bagit/bagitspec.html
 
-require 'bagit/bag'
-require 'bagit/version'
+require_relative 'bagit/bag'
+require_relative 'bagit/version'
 require 'fileutils'
 require 'date'
 

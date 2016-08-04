@@ -1,9 +1,9 @@
-require 'bagit/fetch'
-require 'bagit/file'
-require 'bagit/info'
-require 'bagit/manifest'
-require 'bagit/string'
-require 'bagit/valid'
+require_relative 'fetch.rb'
+require_relative 'file.rb'
+require_relative 'info.rb'
+require_relative 'manifest.rb'
+require_relative 'string.rb'
+require_relative 'valid.rb'
 
 module BagIt
 
@@ -58,16 +58,36 @@ module BagIt
     # Add a bag file
     def add_file(base_path, src_path=nil)
       path = File.join(data_dir, base_path)
-      raise "Bag file exists: #{base_path}" if File.exist? path
       FileUtils::mkdir_p File.dirname(path)
 
       if src_path.nil?
         f = File.open(path, 'w') { |io| yield io }
       else
-        f = FileUtils::cp src_path, path
+        begin
+          f = FileUtils.mv(src_path, path)
+        rescue => e
+          raise "File already exists. For more detail, exception #{e.inspect}"
+        end
+
       end
       write_bag_info
       return f
+    end
+
+    # Add a directory and its contents
+    def add_directory(base_path, src_path)
+      path = File.join(data_dir, base_path)
+      FileUtils::mkdir_p(path)
+
+      Dir.glob(File.join(src_path, '*')).each do |file|
+        begin
+          FileUtils.mv(file, path)
+          write_bag_info
+        rescue
+          raise "File already exists. For more detail, exception #{e.inspect}"
+        end
+
+      end
     end
 
     # Remove a bag file
