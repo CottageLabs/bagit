@@ -28,6 +28,7 @@ module BagIt
 
       # manifest each tag file for each algorithm
       bag_files.each do |f|
+        puts f
         rel_path = Pathname.new(f).relative_path_from(Pathname.new(bag_dir)).to_s
 
         # sha1
